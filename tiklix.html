@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="TikTok Downloader - Download TikTok videos without watermark, HD quality, MP3 audio and photos. Fast, free, and no registration required.">
+<meta name="keywords" content="TikTok Downloader, Download TikTok, No Watermark, TikTok MP3, TikTok HD Video">
+<meta name="author" content="janmalik499">
+<meta property="og:title" content="TikLix — Premium TikTok Downloader">
+<meta property="og:description" content="Download TikTok videos without watermark, HD, MP3, and photos. Free and instant.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tiklix.janmalik499.com">
+<meta name="theme-color" content="#0a0a0f">
+<title>TikLix — Premium TikTok Downloader | No Watermark · HD · MP3</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+
+<style>
+/* ===== CSS CUSTOM PROPERTIES ===== */
+:root {
+  --neon-pink: #ff2d78;
+  --neon-cyan: #00f5ff;
+  --neon-orange: #ff6b00;
+  --neon-purple: #bf5fff;
+  --neon-green: #00ff88;
+  --bg-primary: #060610;
+  --bg-secondary: #0d0d1a;
+  --bg-card: rgba(255,255,255,0.04);
+  --bg-glass: rgba(255,255,255,0.06);
+  --border-glass: rgba(255,255,255,0.1);
+  --border-neon: rgba(0,245,255,0.3);
+  --text-primary: #f0f0ff;
+  --text-secondary: rgba(240,240,255,0.6);
+  --text-muted: rgba(240,240,255,0.35);
+  --font-display: 'Orbitron', monospace;
+  --font-body: 'Rajdhani', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --glow-pink: 0 0 20px rgba(255,45,120,0.6), 0 0 60px rgba(255,45,120,0.2);
+  --glow-cyan: 0 0 20px rgba(0,245,255,0.6), 0 0 60px rgba(0,245,255,0.2);
+  --glow-orange: 0 0 20px rgba(255,107,0,0.6), 0 0 60px rgba(255,107,0,0.2);
+  --radius: 12px;
+  --radius-lg: 20px;
+  --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ===== RESET & BASE ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  font-family:var(--font-body);
+  background:var(--bg-primary);
+  color:var(--text-primary);
+  min-height:100vh;
+  overflow-x:hidden;
+  cursor:none;
+}
+::selection{background:rgba(0,245,255,0.25);color:#fff}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#060610}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--neon-pink),var(--neon-cyan));border-radius:3px}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;border-radius:var(--radius)}
+
+/* ===== CUSTOM CURSOR ===== */
+#cursor{
+  position:fixed;width:12px;height:12px;
+  background:var(--neon-cyan);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  box-shadow:var(--glow-cyan);
+  transition:width 0.2s,height 0.2s,background 0.2s;
+}
+#cursor-aura{
+  position:fixed;width:40px;height:40px;
+  border:1px solid rgba(0,245,255,0.4);
+  border-radius:50%;pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:all 0.1s ease-out;
+  box-shadow:0 0 15px rgba(0,245,255,0.15);
+}
+body:has(a:hover) #cursor,
+body:has(button:hover) #cursor{
+  width:20px;height:20px;
+  background:var(--neon-pink);
+  box-shadow:var(--glow-pink);
+}
+
+/* ===== ANIMATED PARTICLE BACKGROUND ===== */
+#particles-canvas{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;opacity:0.5;
+}
+
+/* ===== BACKGROUND GRID ===== */
+.bg-grid{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background-image:
+    linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;z-index:0;
+}
+
+/* ===== FLOATING GLOW ORBS ===== */
+.orb{
+  position:fixed;border-radius:50%;pointer-events:none;
+  filter:blur(80px);opacity:0.15;z-index:0;
+  animation:orbFloat 8s ease-in-out infinite;
+}
+.orb-1{width:400px;height:400px;background:var(--neon-pink);top:-100px;left:-100px;animation-delay:0s}
+.orb-2{width:350px;height:350px;background:var(--neon-cyan);bottom:-100px;right:-100px;animation-delay:-4s}
+.orb-3{width:300px;height:300px;background:var(--neon-orange);top:50%;right:20%;animation-delay:-2s}
+@keyframes orbFloat{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(30px,-30px) scale(1.05)}
+  66%{transform:translate(-20px,20px) scale(0.95)}
+}
+
+/* ===== NAVBAR ===== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:16px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(6,6,16,0.8);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(0,245,255,0.1);
+  transition:var(--transition);
+}
+nav.scrolled{padding:12px 40px;background:rgba(6,6,16,0.95)}
+.nav-logo{
+  font-family:var(--font-display);
+  font-size:1.4rem;font-weight:900;
+  background:linear-gradient(135deg,var(--neon-pink),var(--neon-cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:2px;
+}
+.nav-logo span{-webkit-text-fill-color:var(--neon-orange)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{
+  font-family:var(--font-body);font-size:0.9rem;font-weight:600;
+  letter-spacing:1px;text-transform:uppercase;
+  color:var(--text-secondary);
+  position:relative;padding:4px 0;
+  transition:var(--transition);
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;
+  background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));
+  transition:width 0.3s ease;
+}
+.nav-links a:hover{color:var(--neon-cyan)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{
+  padding:8px 24px;
+  background:linear-gradient(135deg,var(--neon-pink),var(--neon-purple));
+  border:none;border-radius:100px;
+  font-family:var(--font-display);font-size:0.75rem;
+  font-weight:700;letter-spacing:1px;color:#fff;cursor:pointer;
+  box-shadow:0 0 20px rgba(255,45,120,0.4);
+  transition:var(--transition);
+}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:var(--glow-pink)}
+.nav-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
+.nav-toggle span{width:24px;height:2px;background:var(--neon-cyan);border-radius:2px;transition:var(--transition)}
+
+/* ===== HERO SECTION ===== */
+#home{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:120px 40px 80px;
+  position:relative;overflow:hidden;
+}
+.hero-content{
+  text-align:center;max-width:900px;
+  position:relative;z-index:1;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 20px;margin-bottom:28px;
+  background:rgba(0,245,255,0.08);
+  border:1px solid rgba(0,245,255,0.25);
+  border-radius:100px;
+  font-family:var(--font-mono);font-size:0.75rem;
+  color:var(--neon-cyan);letter-spacing:1px;
+  animation:fadeInDown 0.8s ease both;
+}
+.hero-badge .dot{
+  width:6px;height:6px;background:var(--neon-green);
+  border-radius:50%;animation:pulse 2s ease-in-out infinite;
+}
+.hero-title{
+  font-family:var(--font-display);
+  font-size:clamp(2.8rem,7vw,5.5rem);
+  font-weight:900;line-height:1;
+  letter-spacing:-1px;margin-bottom:16px;
+  animation:fadeInUp 0.8s ease 0.2s both;
+}
+.hero-title .line1{
+  background:linear-gradient(135deg,#fff 30%,rgba(255,255,255,0.7));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-title .line2{
+  background:linear-gradient(135deg,var(--neon-pink),var(--neon-cyan),var(--neon-orange));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;
+  animation:gradientShift 4s linear infinite;
+  background-size:200% auto;
+}
+@keyframes gradientShift{
+  0%{background-position:0% center}
+  100%{background-position:200% center}
+}
+.hero-sub{
+  font-size:1.15rem;font-weight:400;
+  color:var(--text-secondary);
+  max-width:600px;margin:0 auto 40px;
+  line-height:1.7;
+  animation:fadeInUp 0.8s ease 0.4s both;
+}
+.hero-stats{
+  display:flex;justify-content:center;gap:40px;
+  margin-bottom:48px;
+  animation:fadeInUp 0.8s ease 0.6s both;
+}
+.stat{text-align:center}
+.stat-num{
+  font-family:var(--font-display);font-size:1.8rem;font-weight:900;
+  background:linear-gradient(135deg,var(--neon-cyan),var(--neon-pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.stat-label{font-size:0.75rem;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase}
+
+/* ===== URL INPUT CARD ===== */
+.downloader-card{
+  background:var(--bg-glass);
+  backdrop-filter:blur(24px);
+  border:1px solid var(--border-glass);
+  border-radius:var(--radius-lg);
+  padding:32px;
+  max-width:760px;margin:0 auto;
+  position:relative;overflow:hidden;
+  animation:fadeInUp 0.8s ease 0.7s both;
+  box-shadow:0 25px 80px rgba(0,0,0,0.5);
+}
+.downloader-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--neon-cyan),var(--neon-pink),transparent);
+}
+.input-wrapper{
+  display:flex;gap:12px;
+  background:rgba(0,0,0,0.4);
+  border:1px solid rgba(0,245,255,0.15);
+  border-radius:var(--radius);
+  padding:6px;
+  transition:var(--transition);
+  margin-bottom:16px;
+}
+.input-wrapper:focus-within{
+  border-color:var(--neon-cyan);
+  box-shadow:0 0 0 3px rgba(0,245,255,0.1),var(--glow-cyan);
+}
+.url-input{
+  flex:1;background:none;border:none;outline:none;
+  font-family:var(--font-mono);font-size:0.85rem;
+  color:var(--text-primary);padding:12px 16px;
+}
+.url-input::placeholder{color:var(--text-muted)}
+.paste-btn{
+  padding:10px 16px;
+  background:rgba(0,245,255,0.1);
+  border:1px solid rgba(0,245,255,0.2);
+  border-radius:8px;color:var(--neon-cyan);
+  cursor:pointer;font-size:0.8rem;font-weight:600;
+  letter-spacing:0.5px;
+  transition:var(--transition);white-space:nowrap;
+  display:flex;align-items:center;gap:6px;
+}
+.paste-btn:hover{background:rgba(0,245,255,0.2);box-shadow:var(--glow-cyan)}
+.fetch-btn{
+  width:100%;padding:16px;
+  background:linear-gradient(135deg,var(--neon-pink) 0%,var(--neon-purple) 50%,var(--neon-cyan) 100%);
+  background-size:200% auto;
+  border:none;border-radius:var(--radius);
+  font-family:var(--font-display);font-size:0.9rem;
+  font-weight:700;letter-spacing:2px;
+  color:#fff;cursor:pointer;
+  position:relative;overflow:hidden;
+  transition:var(--transition);
+  text-transform:uppercase;
+}
+.fetch-btn:hover{
+  background-position:right center;
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px rgba(255,45,120,0.5);
+}
+.fetch-btn:active{transform:translateY(0)}
+.fetch-btn::before{
+  content:'';position:absolute;top:0;left:-100%;
+  width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
+  transition:left 0.5s ease;
+}
+.fetch-btn:hover::before{left:100%}
+.fetch-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.clipboard-hint{
+  display:flex;align-items:center;gap:8px;
+  font-size:0.78rem;color:var(--text-muted);
+  margin-top:12px;
+}
+.clipboard-hint .icon{color:var(--neon-cyan);font-size:0.85rem}
+
+/* ===== LOADING SPINNER ===== */
+.loader-wrap{display:none;flex-direction:column;align-items:center;gap:16px;padding:40px;
+}
+.loader-wrap.active{display:flex}
+.spinner{
+  width:60px;height:60px;
+  border:3px solid rgba(0,245,255,0.1);
+  border-top:3px solid var(--neon-cyan);
+  border-right:3px solid var(--neon-pink);
+  border-radius:50%;
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader-text{
+  font-family:var(--font-mono);font-size:0.8rem;
+  color:var(--neon-cyan);letter-spacing:2px;
+  animation:blink 1.5s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* ===== RESULT SECTION ===== */
+#result-section{display:none;padding:0 40px 60px;max-width:900px;margin:0 auto}
+#result-section.active{display:block;animation:fadeInUp 0.6s ease both}
+
+.result-card{
+  background:var(--bg-glass);
+  backdrop-filter:blur(24px);
+  border:1px solid var(--border-glass);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  box-shadow:0 25px 80px rgba(0,0,0,0.5);
+  position:relative;
+}
+.result-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--neon-cyan),transparent);
+}
+.result-header{
+  display:grid;grid-template-columns:auto 1fr;gap:20px;
+  padding:24px;border-bottom:1px solid rgba(255,255,255,0.06);
+  position:relative;
+}
+.thumb-wrap{position:relative;width:140px;height:100px;flex-shrink:0}
+.thumb-wrap img{width:100%;height:100%;object-fit:cover;border-radius:10px}
+.thumb-overlay{
+  position:absolute;inset:0;border-radius:10px;
+  background:linear-gradient(135deg,rgba(255,45,120,0.2),rgba(0,245,255,0.2));
+  border:1px solid rgba(0,245,255,0.2);
+}
+.play-icon{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:36px;height:36px;background:rgba(255,255,255,0.9);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:var(--neon-pink);font-size:0.9rem;
+}
+.meta{display:flex;flex-direction:column;justify-content:center;gap:8px;min-width:0}
+.meta-title{
+  font-family:var(--font-body);font-size:1rem;font-weight:600;
+  color:var(--text-primary);line-height:1.4;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.meta-author{
+  display:flex;align-items:center;gap:6px;
+  font-size:0.8rem;color:var(--neon-cyan);
+}
+.meta-author i{font-size:0.75rem}
+.meta-tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{
+  padding:3px 10px;border-radius:100px;
+  font-size:0.7rem;font-weight:600;letter-spacing:0.5px;
+  background:rgba(255,45,120,0.1);
+  border:1px solid rgba(255,45,120,0.2);
+  color:var(--neon-pink);
+}
+
+/* ===== DOWNLOAD BUTTONS ===== */
+.dl-options{padding:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.dl-btn{
+  padding:14px 20px;
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:var(--radius);
+  background:rgba(255,255,255,0.04);
+  color:var(--text-primary);cursor:pointer;
+  font-family:var(--font-body);font-size:0.875rem;font-weight:600;
+  display:flex;align-items:center;gap:10px;
+  transition:var(--transition);position:relative;overflow:hidden;
+}
+.dl-btn:disabled{opacity:0.3;cursor:not-allowed}
+.dl-btn .btn-icon{
+  width:36px;height:36px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.9rem;flex-shrink:0;
+  transition:var(--transition);
+}
+.dl-btn .btn-info{display:flex;flex-direction:column;gap:2px;text-align:left}
+.dl-btn .btn-title{font-size:0.8rem;font-weight:700}
+.dl-btn .btn-sub{font-size:0.65rem;opacity:0.5;text-transform:uppercase;letter-spacing:0.5px}
+.dl-btn::before{
+  content:'';position:absolute;top:0;left:-100%;
+  width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent);
+  transition:left 0.5s;
+}
+.dl-btn:hover::before{left:100%}
+
+.dl-btn.pink{border-color:rgba(255,45,120,0.3)}
+.dl-btn.pink .btn-icon{background:rgba(255,45,120,0.15);color:var(--neon-pink)}
+.dl-btn.pink:hover{border-color:var(--neon-pink);background:rgba(255,45,120,0.08);box-shadow:0 0 20px rgba(255,45,120,0.2)}
+
+.dl-btn.cyan{border-color:rgba(0,245,255,0.3)}
+.dl-btn.cyan .btn-icon{background:rgba(0,245,255,0.15);color:var(--neon-cyan)}
+.dl-btn.cyan:hover{border-color:var(--neon-cyan);background:rgba(0,245,255,0.08);box-shadow:0 0 20px rgba(0,245,255,0.2)}
+
+.dl-btn.orange{border-color:rgba(255,107,0,0.3)}
+.dl-btn.orange .btn-icon{background:rgba(255,107,0,0.15);color:var(--neon-orange)}
+.dl-btn.orange:hover{border-color:var(--neon-orange);background:rgba(255,107,0,0.08);box-shadow:0 0 20px rgba(255,107,0,0.2)}
+
+.dl-btn.purple{border-color:rgba(191,95,255,0.3)}
+.dl-btn.purple .btn-icon{background:rgba(191,95,255,0.15);color:var(--neon-purple)}
+.dl-btn.purple:hover{border-color:var(--neon-purple);background:rgba(191,95,255,0.08);box-shadow:0 0 20px rgba(191,95,255,0.2)}
+
+/* ===== PHOTO GALLERY ===== */
+#gallery-section{display:none;padding:24px;border-top:1px solid rgba(255,255,255,0.06)}
+#gallery-section.active{display:block}
+.gallery-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:20px;
+}
+.gallery-title{
+  font-family:var(--font-display);font-size:0.9rem;font-weight:700;
+  color:var(--neon-cyan);letter-spacing:1px;
+  display:flex;align-items:center;gap:8px;
+}
+.dl-all-btn{
+  padding:8px 20px;
+  background:linear-gradient(135deg,var(--neon-orange),var(--neon-pink));
+  border:none;border-radius:100px;
+  font-family:var(--font-body);font-size:0.8rem;font-weight:700;
+  color:#fff;cursor:pointer;letter-spacing:0.5px;
+  transition:var(--transition);
+}
+.dl-all-btn:hover{transform:translateY(-2px);box-shadow:var(--glow-orange)}
+.gallery-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;
+}
+.gallery-item{
+  position:relative;border-radius:var(--radius);overflow:hidden;
+  aspect-ratio:9/16;cursor:pointer;
+}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease}
+.gallery-item:hover img{transform:scale(1.05)}
+.gallery-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);
+  opacity:0;transition:var(--transition);
+  display:flex;align-items:flex-end;padding:12px;
+}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-dl-btn{
+  width:100%;padding:8px;
+  background:var(--neon-cyan);border:none;border-radius:8px;
+  font-family:var(--font-body);font-size:0.75rem;font-weight:700;
+  color:#000;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:var(--transition);
+}
+.gallery-dl-btn:hover{background:#fff}
+
+/* ===== NATIVE BANNER AD ===== */
+.ad-banner-removed{
+  max-width:900px;margin:0 auto 20px;
+  padding:0 40px;
+}
+
+/* ===== FEATURES SECTION ===== */
+#features{
+  padding:100px 40px;
+  position:relative;
+}
+.section-label{
+  text-align:center;margin-bottom:60px;
+}
+.section-tag{
+  display:inline-block;
+  font-family:var(--font-mono);font-size:0.7rem;letter-spacing:3px;
+  text-transform:uppercase;color:var(--neon-cyan);
+  padding:6px 16px;
+  border:1px solid rgba(0,245,255,0.2);
+  border-radius:100px;margin-bottom:16px;
+}
+.section-title{
+  font-family:var(--font-display);
+  font-size:clamp(1.8rem,4vw,3rem);
+  font-weight:900;line-height:1.1;
+  background:linear-gradient(135deg,#fff,rgba(255,255,255,0.6));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.section-title span{
+  background:linear-gradient(135deg,var(--neon-pink),var(--neon-cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.features-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:20px;max-width:1100px;margin:0 auto;
+}
+.feature-card{
+  background:var(--bg-glass);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--border-glass);
+  border-radius:var(--radius-lg);
+  padding:28px;
+  position:relative;overflow:hidden;
+  transition:var(--transition);
+  cursor:default;
+}
+.feature-card::before{
+  content:'';position:absolute;
+  top:0;left:0;width:100%;height:2px;
+  opacity:0;transition:var(--transition);
+}
+.feature-card:nth-child(1)::before{background:linear-gradient(90deg,var(--neon-pink),var(--neon-purple))}
+.feature-card:nth-child(2)::before{background:linear-gradient(90deg,var(--neon-cyan),var(--neon-green))}
+.feature-card:nth-child(3)::before{background:linear-gradient(90deg,var(--neon-orange),var(--neon-pink))}
+.feature-card:nth-child(4)::before{background:linear-gradient(90deg,var(--neon-purple),var(--neon-cyan))}
+.feature-card:nth-child(5)::before{background:linear-gradient(90deg,var(--neon-green),var(--neon-cyan))}
+.feature-card:nth-child(6)::before{background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange))}
+.feature-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(255,255,255,0.15);
+  box-shadow:0 20px 60px rgba(0,0,0,0.4);
+}
+.feature-card:hover::before{opacity:1}
+.feature-icon{
+  width:56px;height:56px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;margin-bottom:20px;
+  position:relative;
+}
+.fi-1{background:rgba(255,45,120,0.15);color:var(--neon-pink);box-shadow:0 0 20px rgba(255,45,120,0.2)}
+.fi-2{background:rgba(0,245,255,0.15);color:var(--neon-cyan);box-shadow:0 0 20px rgba(0,245,255,0.2)}
+.fi-3{background:rgba(255,107,0,0.15);color:var(--neon-orange);box-shadow:0 0 20px rgba(255,107,0,0.2)}
+.fi-4{background:rgba(191,95,255,0.15);color:var(--neon-purple);box-shadow:0 0 20px rgba(191,95,255,0.2)}
+.fi-5{background:rgba(0,255,136,0.15);color:var(--neon-green);box-shadow:0 0 20px rgba(0,255,136,0.2)}
+.fi-6{background:rgba(255,45,120,0.15);color:var(--neon-pink);box-shadow:0 0 20px rgba(255,45,120,0.2)}
+.feature-name{
+  font-family:var(--font-display);font-size:1rem;font-weight:700;
+  color:var(--text-primary);margin-bottom:10px;letter-spacing:0.5px;
+}
+.feature-desc{
+  font-size:0.875rem;color:var(--text-secondary);line-height:1.6;
+}
+
+/* ===== HOW TO USE ===== */
+#how-to-use{padding:100px 40px;position:relative}
+.steps-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:24px;max-width:900px;margin:0 auto;
+  position:relative;
+}
+.steps-grid::before{
+  content:'';position:absolute;top:40px;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--neon-cyan),var(--neon-pink),var(--neon-orange),transparent);
+  opacity:0.3;
+}
+.step-card{
+  background:var(--bg-glass);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--border-glass);
+  border-radius:var(--radius-lg);
+  padding:32px 24px;
+  text-align:center;
+  position:relative;overflow:hidden;
+  transition:var(--transition);
+}
+.step-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(0,245,255,0.2);
+  box-shadow:0 20px 60px rgba(0,0,0,0.4),0 0 40px rgba(0,245,255,0.05);
+}
+.step-num{
+  font-family:var(--font-display);
+  font-size:3.5rem;font-weight:900;
+  background:linear-gradient(135deg,rgba(255,255,255,0.1),rgba(255,255,255,0.04));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  position:absolute;top:16px;right:20px;line-height:1;
+}
+.step-icon{
+  width:64px;height:64px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;margin:0 auto 20px;
+}
+.si-1{background:rgba(255,45,120,0.15);color:var(--neon-pink);box-shadow:0 0 30px rgba(255,45,120,0.25)}
+.si-2{background:rgba(0,245,255,0.15);color:var(--neon-cyan);box-shadow:0 0 30px rgba(0,245,255,0.25)}
+.si-3{background:rgba(255,107,0,0.15);color:var(--neon-orange);box-shadow:0 0 30px rgba(255,107,0,0.25)}
+.si-4{background:rgba(0,255,136,0.15);color:var(--neon-green);box-shadow:0 0 30px rgba(0,255,136,0.25)}
+.step-title{
+  font-family:var(--font-display);font-size:0.9rem;font-weight:700;
+  color:var(--text-primary);margin-bottom:10px;letter-spacing:0.5px;
+}
+.step-desc{font-size:0.85rem;color:var(--text-secondary);line-height:1.6}
+
+/* ===== CONTACT / SOCIAL SECTION ===== */
+#contact{padding:100px 40px;position:relative}
+.social-intro{
+  text-align:center;max-width:600px;margin:0 auto 60px;
+  color:var(--text-secondary);font-size:1rem;line-height:1.7;
+}
+.social-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:12px;max-width:1200px;margin:0 auto 60px;
+}
+.social-card{
+  background:var(--bg-glass);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--border-glass);
+  border-radius:var(--radius);
+  padding:16px 20px;
+  display:flex;align-items:center;gap:14px;
+  color:var(--text-secondary);
+  transition:var(--transition);
+  position:relative;overflow:hidden;
+}
+.social-card::after{
+  content:'';position:absolute;
+  bottom:0;left:0;width:0;height:2px;
+  transition:width 0.3s ease;
+}
+.social-card:hover{
+  transform:translateY(-3px);
+  color:var(--text-primary);
+  background:rgba(255,255,255,0.07);
+  border-color:rgba(255,255,255,0.15);
+}
+.social-card:hover::after{width:100%}
+.social-card:hover .sc-icon{transform:scale(1.1)}
+.sc-icon{
+  width:38px;height:38px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;flex-shrink:0;
+  transition:var(--transition);
+}
+.sc-info{min-width:0}
+.sc-name{font-size:0.8rem;font-weight:700;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc-handle{font-size:0.7rem;opacity:0.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Social color themes */
+.sc-facebook .sc-icon{background:rgba(24,119,242,0.15);color:#1877f2}
+.sc-facebook::after{background:#1877f2}
+.sc-x .sc-icon{background:rgba(255,255,255,0.1);color:#fff}
+.sc-x::after{background:#fff}
+.sc-youtube .sc-icon{background:rgba(255,0,0,0.15);color:#ff0000}
+.sc-youtube::after{background:#ff0000}
+.sc-instagram .sc-icon{background:rgba(225,48,108,0.15);color:#e1306c}
+.sc-instagram::after{background:#e1306c}
+.sc-tiktok .sc-icon{background:rgba(0,0,0,0.3);color:#fff}
+.sc-tiktok::after{background:linear-gradient(90deg,#69C9D0,#EE1D52)}
+.sc-github .sc-icon{background:rgba(255,255,255,0.1);color:#fff}
+.sc-github::after{background:#fff}
+.sc-linkedin .sc-icon{background:rgba(0,119,181,0.15);color:#0077b5}
+.sc-linkedin::after{background:#0077b5}
+.sc-telegram .sc-icon{background:rgba(0,136,204,0.15);color:#0088cc}
+.sc-telegram::after{background:#0088cc}
+.sc-discord .sc-icon{background:rgba(88,101,242,0.15);color:#5865F2}
+.sc-discord::after{background:#5865F2}
+.sc-twitch .sc-icon{background:rgba(145,70,255,0.15);color:#9146ff}
+.sc-twitch::after{background:#9146ff}
+.sc-reddit .sc-icon{background:rgba(255,69,0,0.15);color:#ff4500}
+.sc-reddit::after{background:#ff4500}
+.sc-twitter .sc-icon{background:rgba(29,161,242,0.15);color:#1da1f2}
+.sc-twitter::after{background:#1da1f2}
+.sc-pinterest .sc-icon{background:rgba(230,0,35,0.15);color:#e60023}
+.sc-pinterest::after{background:#e60023}
+.sc-tumblr .sc-icon{background:rgba(54,70,93,0.2);color:#36465d}
+.sc-tumblr::after{background:#36465d}
+.sc-patreon .sc-icon{background:rgba(255,66,77,0.15);color:#ff424d}
+.sc-patreon::after{background:#ff424d}
+.sc-ko-fi .sc-icon{background:rgba(255,94,94,0.15);color:#ff5e5e}
+.sc-ko-fi::after{background:#ff5e5e}
+.sc-whatsapp .sc-icon{background:rgba(37,211,102,0.15);color:#25d366}
+.sc-whatsapp::after{background:#25d366}
+.sc-binance .sc-icon{background:rgba(243,186,47,0.15);color:#f3ba2f}
+.sc-binance::after{background:#f3ba2f}
+.sc-mastodon .sc-icon{background:rgba(99,100,255,0.15);color:#6364ff}
+.sc-mastodon::after{background:#6364ff}
+.sc-bluesky .sc-icon{background:rgba(0,133,255,0.15);color:#0085ff}
+.sc-bluesky::after{background:#0085ff}
+.sc-parler .sc-icon{background:rgba(255,64,64,0.15);color:#ff4040}
+.sc-parler::after{background:#ff4040}
+.sc-default .sc-icon{background:rgba(255,255,255,0.08);color:var(--text-secondary)}
+.sc-default::after{background:var(--neon-cyan)}
+
+/* ===== FOOTER ===== */
+footer{
+  padding:40px;
+  border-top:1px solid rgba(255,255,255,0.06);
+  text-align:center;
+  position:relative;
+}
+.footer-logo{
+  font-family:var(--font-display);font-size:1.6rem;font-weight:900;
+  background:linear-gradient(135deg,var(--neon-pink),var(--neon-cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:12px;
+}
+.footer-copy{
+  font-size:0.8rem;color:var(--text-muted);line-height:1.8;
+}
+.footer-copy a{color:var(--neon-cyan);transition:var(--transition)}
+.footer-copy a:hover{color:var(--neon-pink)}
+
+/* ===== TOAST NOTIFICATIONS ===== */
+#toast-container{
+  position:fixed;top:90px;right:24px;z-index:9000;
+  display:flex;flex-direction:column;gap:10px;
+}
+.toast{
+  min-width:280px;max-width:360px;
+  padding:14px 18px;
+  background:rgba(10,10,20,0.95);
+  backdrop-filter:blur(20px);
+  border-radius:var(--radius);
+  display:flex;align-items:flex-start;gap:12px;
+  animation:toastIn 0.4s cubic-bezier(0.4,0,0.2,1) both;
+  position:relative;overflow:hidden;
+}
+.toast::before{content:'';position:absolute;bottom:0;left:0;height:2px;width:100%;animation:toastBar 4s linear forwards}
+.toast.success{border:1px solid rgba(0,255,136,0.3);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+.toast.success::before{background:linear-gradient(90deg,var(--neon-green),var(--neon-cyan))}
+.toast.error{border:1px solid rgba(255,45,120,0.3);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+.toast.error::before{background:linear-gradient(90deg,var(--neon-pink),var(--neon-orange))}
+.toast.info{border:1px solid rgba(0,245,255,0.3);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+.toast.info::before{background:linear-gradient(90deg,var(--neon-cyan),var(--neon-purple))}
+.toast-icon{font-size:1.1rem;margin-top:1px;flex-shrink:0}
+.toast.success .toast-icon{color:var(--neon-green)}
+.toast.error .toast-icon{color:var(--neon-pink)}
+.toast.info .toast-icon{color:var(--neon-cyan)}
+.toast-msg{font-size:0.85rem;color:var(--text-primary);line-height:1.5}
+.toast-close{
+  margin-left:auto;background:none;border:none;
+  color:var(--text-muted);cursor:pointer;font-size:0.9rem;
+  flex-shrink:0;transition:var(--transition);
+}
+.toast-close:hover{color:var(--text-primary)}
+@keyframes toastIn{
+  from{transform:translateX(120%);opacity:0}
+  to{transform:translateX(0);opacity:1}
+}
+@keyframes toastBar{from{width:100%}to{width:0}}
+
+/* ===== DOWNLOAD PROGRESS ===== */
+.dl-progress{
+  position:absolute;bottom:0;left:0;height:3px;
+  background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));
+  width:0%;transition:width 0.3s ease;
+  border-radius:0 2px 2px 0;
+}
+
+/* ===== SKELETON LOADING ===== */
+.skeleton{
+  background:linear-gradient(90deg,rgba(255,255,255,0.05) 25%,rgba(255,255,255,0.1) 50%,rgba(255,255,255,0.05) 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.5s infinite;
+  border-radius:6px;
+}
+@keyframes shimmer{
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
+}
+
+/* ===== SCROLL ANIMATIONS ===== */
+.reveal{
+  opacity:0;transform:translateY(30px);
+  transition:opacity 0.7s ease,transform 0.7s ease;
+}
+.reveal.visible{opacity:1;transform:none}
+
+/* ===== KEYFRAMES ===== */
+@keyframes fadeInDown{
+  from{opacity:0;transform:translateY(-20px)}
+  to{opacity:1;transform:none}
+}
+@keyframes fadeInUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:none}
+}
+@keyframes pulse{
+  0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,255,136,0.6)}
+  50%{opacity:0.7;box-shadow:0 0 0 6px rgba(0,255,136,0)}
+}
+
+/* ===== DARK/LIGHT TOGGLE ===== */
+.theme-toggle{
+  position:fixed;bottom:30px;right:30px;z-index:500;
+  width:48px;height:48px;
+  background:var(--bg-glass);
+  backdrop-filter:blur(20px);
+  border:1px solid var(--border-glass);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1.1rem;
+  transition:var(--transition);
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
+}
+.theme-toggle:hover{
+  border-color:var(--neon-cyan);
+  box-shadow:var(--glow-cyan);
+  transform:translateY(-2px);
+}
+
+/* ===== LIGHT MODE ===== */
+body.light-mode{
+  --bg-primary:#f0f4ff;
+  --bg-secondary:#e8edf8;
+  --bg-glass:rgba(255,255,255,0.7);
+  --border-glass:rgba(0,0,0,0.1);
+  --text-primary:#0a0a20;
+  --text-secondary:rgba(10,10,32,0.6);
+  --text-muted:rgba(10,10,32,0.35);
+  --bg-card:rgba(0,0,0,0.04);
+}
+body.light-mode .bg-grid{
+  background-image:
+    linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+}
+body.light-mode nav{background:rgba(240,244,255,0.9)}
+body.light-mode .url-input{color:var(--text-primary)}
+
+/* ===== STATS COUNTER ===== */
+.clear-input-btn{
+  padding:10px 12px;
+  background:rgba(255,45,120,0.1);
+  border:1px solid rgba(255,45,120,0.3);
+  border-radius:8px;color:var(--neon-pink);
+  cursor:pointer;font-size:0.85rem;
+  transition:var(--transition);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.clear-input-btn:hover{background:rgba(255,45,120,0.25);box-shadow:var(--glow-pink)}
+
+.new-video-btn{
+  position:absolute;top:16px;right:16px;
+  padding:8px 16px;
+  background:rgba(0,245,255,0.08);
+  border:1px solid rgba(0,245,255,0.25);
+  border-radius:100px;
+  font-family:var(--font-body);font-size:0.8rem;font-weight:700;
+  color:var(--neon-cyan);cursor:pointer;
+  display:flex;align-items:center;gap:6px;
+  transition:var(--transition);letter-spacing:0.5px;
+  z-index:2;
+}
+.new-video-btn:hover{background:rgba(0,245,255,0.18);box-shadow:var(--glow-cyan);transform:translateY(-1px)}
+
+.dl-counter{
+  text-align:center;
+  font-family:var(--font-mono);font-size:0.75rem;
+  color:var(--text-muted);padding-top:8px;
+}
+.dl-counter span{color:var(--neon-cyan)}
+
+/* ===== MOBILE MENU ===== */
+.mobile-menu{
+  display:none;
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:rgba(6,6,16,0.98);
+  backdrop-filter:blur(20px);
+  z-index:999;
+  flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:32px;
+}
+.mobile-menu.open{display:flex}
+.mobile-menu a{
+  font-family:var(--font-display);font-size:1.2rem;
+  font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--text-secondary);transition:var(--transition);
+}
+.mobile-menu a:hover{color:var(--neon-cyan)}
+.close-menu{
+  position:absolute;top:24px;right:24px;
+  background:none;border:none;
+  color:var(--neon-cyan);font-size:1.5rem;cursor:pointer;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .nav-links,.nav-cta{display:none}
+  .nav-toggle{display:flex}
+  nav{padding:16px 24px}
+  #home{padding:100px 24px 60px}
+  .hero-stats{gap:24px}
+  .stat-num{font-size:1.4rem}
+  #result-section{padding:0 24px 40px}
+  #features,#how-to-use,#contact{padding:70px 24px}
+  .steps-grid::before{display:none}
+}
+@media(max-width:600px){
+  .hero-stats{flex-wrap:wrap;gap:16px;justify-content:center}
+  .result-header{grid-template-columns:1fr}
+  .thumb-wrap{width:100%;height:200px}
+  .dl-options{grid-template-columns:1fr 1fr}
+  .social-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+  .downloader-card{padding:20px}
+  .input-wrapper{flex-direction:column;gap:8px}
+  .paste-btn{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div id="cursor"></div>
+<div id="cursor-aura"></div>
+
+<!-- Background Elements -->
+<canvas id="particles-canvas"></canvas>
+<div class="bg-grid"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- Toast Container -->
+<div id="toast-container" role="alert" aria-live="polite"></div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <button class="close-menu" id="close-menu" aria-label="Close menu"><i class="fas fa-times"></i></button>
+  <a href="#home" onclick="closeMobileMenu()">Home</a>
+  <a href="#features" onclick="closeMobileMenu()">Features</a>
+  <a href="#how-to-use" onclick="closeMobileMenu()">How To Use</a>
+  <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-logo">Tik<span>Lix</span></div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how-to-use">How To Use</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('url-input').focus();document.getElementById('home').scrollIntoView()">
+    Download Now
+  </button>
+  <div class="nav-toggle" id="nav-toggle" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section id="home">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      <span>No Registration Required · 100% Free</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="line1">Download TikTok</span>
+      <span class="line2">Without Limits</span>
+    </h1>
+    <p class="hero-sub">
+      Download TikTok videos without watermark, in HD quality, extract MP3 audio, 
+      and save slide photos — instantly, for free.
+    </p>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num" id="counter-display">0</div>
+        <div class="stat-label">Downloads</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">HD</div>
+        <div class="stat-label">Quality</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">0<span style="font-size:1rem">ms</span></div>
+        <div class="stat-label">Watermark</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Free</div>
+      </div>
+    </div>
+
+    <!-- DOWNLOADER CARD -->
+    <div class="downloader-card" id="downloader-main">
+      <div class="input-wrapper">
+        <input
+          type="url"
+          id="url-input"
+          class="url-input"
+          placeholder="https://www.tiktok.com/@user/video/..."
+          aria-label="TikTok video URL"
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <button class="clear-input-btn" id="clear-input-btn" onclick="clearAll()" aria-label="Clear" style="display:none" title="Clear & New Video">
+          <i class="fas fa-times"></i>
+        </button>
+        <button class="paste-btn" id="paste-btn" onclick="pasteFromClipboard()" aria-label="Paste from clipboard">
+          <i class="fas fa-bolt"></i> Paste & Fetch
+        </button>
+      </div>
+      <button class="fetch-btn" id="fetch-btn" onclick="fetchMedia()" aria-label="Fetch TikTok media">
+        <i class="fas fa-bolt" style="margin-right:10px"></i>
+        FETCH &amp; DOWNLOAD
+      </button>
+      <div class="clipboard-hint">
+        <i class="fas fa-bolt icon"></i>
+        <span>Copy TikTok link → come back → auto-fetches instantly! Or tap "Paste &amp; Fetch"</span>
+      </div>
+      <div class="dl-counter">Total Downloads: <span id="dl-count">0</span></div>
+
+      <!-- Loader inside card -->
+      <div class="loader-wrap" id="loader">
+        <div class="spinner"></div>
+        <div class="loader-text" id="loader-text">FETCHING DATA...</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Native Banner Ad -->
+<div class="ad-banner-removed">
+<script async="async" data-cfasync="false" src="https://pl29504174.effectivecpmnetwork.com/c59e0ae59d47951f276dbf2cf16e6c94/invoke.js"></script>
+<div id="container-c59e0ae59d47951f276dbf2cf16e6c94"></div>
+</div>
+
+<!-- RESULT SECTION -->
+<div id="result-section">
+  <div class="result-card" id="result-card">
+    <div class="result-header">
+      <button class="new-video-btn" onclick="clearAll()" title="Download a new video">
+        <i class="fas fa-plus"></i> New Video
+      </button>
+      <div class="thumb-wrap">
+        <img id="thumb-img" src="" alt="Thumbnail" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'140\' height=\'100\' viewBox=\'0 0 140 100\'%3E%3Crect width=\'140\' height=\'100\' fill=\'%23111122\'/%3E%3Cpath d=\'M55 35 L55 65 L85 50 Z\' fill=\'%23ff2d78\'/%3E%3C/svg%3E'">
+        <div class="thumb-overlay"></div>
+        <div class="play-icon"><i class="fas fa-play"></i></div>
+      </div>
+      <div class="meta">
+        <div class="meta-title" id="video-title">Loading...</div>
+        <div class="meta-author">
+          <i class="fas fa-user-circle"></i>
+          <span id="video-author">@author</span>
+        </div>
+        <div class="meta-tags">
+          <span class="tag" id="tag-type">VIDEO</span>
+          <span class="tag" style="background:rgba(0,245,255,0.1);border-color:rgba(0,245,255,0.2);color:var(--neon-cyan)" id="tag-quality">HD</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Download Options -->
+    <div class="dl-options" id="dl-options">
+      <button class="dl-btn pink" id="btn-no-wm" onclick="downloadFile('no_wm')" aria-label="Download without watermark" disabled>
+        <span class="btn-icon"><i class="fas fa-video"></i></span>
+        <span class="btn-info">
+          <span class="btn-title">No Watermark</span>
+          <span class="btn-sub">MP4 · Standard</span>
+        </span>
+        <div class="dl-progress" id="prog-no-wm"></div>
+      </button>
+      <button class="dl-btn cyan" id="btn-hd" onclick="downloadFile('hd')" aria-label="Download HD video" disabled>
+        <span class="btn-icon"><i class="fas fa-film"></i></span>
+        <span class="btn-info">
+          <span class="btn-title">HD Video</span>
+          <span class="btn-sub">MP4 · High Quality</span>
+        </span>
+        <div class="dl-progress" id="prog-hd"></div>
+      </button>
+      <button class="dl-btn orange" id="btn-mp3" onclick="downloadFile('mp3')" aria-label="Download MP3 audio" disabled>
+        <span class="btn-icon"><i class="fas fa-music"></i></span>
+        <span class="btn-info">
+          <span class="btn-title">MP3 Audio</span>
+          <span class="btn-sub">Audio Only</span>
+        </span>
+        <div class="dl-progress" id="prog-mp3"></div>
+      </button>
+      <button class="dl-btn purple" id="btn-photos" onclick="showGallery()" aria-label="View slide photos" disabled>
+        <span class="btn-icon"><i class="fas fa-images"></i></span>
+        <span class="btn-info">
+          <span class="btn-title">Photos</span>
+          <span class="btn-sub">Slide Images</span>
+        </span>
+      </button>
+    </div>
+
+    <!-- Photo Gallery -->
+    <div id="gallery-section">
+      <div class="gallery-header">
+        <div class="gallery-title">
+          <i class="fas fa-layer-group"></i>
+          Slide Photos
+        </div>
+        <button class="dl-all-btn" onclick="downloadAllPhotos()" aria-label="Download all photos">
+          <i class="fas fa-download" style="margin-right:6px"></i>Download All
+        </button>
+      </div>
+      <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES SECTION -->
+<section id="features">
+  <div class="section-label reveal">
+    <div class="section-tag">Why TikLix?</div>
+    <h2 class="section-title">Premium Features <span>Built Different</span></h2>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-icon fi-1"><i class="fas fa-bolt"></i></div>
+      <div class="feature-name">Lightning Fast</div>
+      <div class="feature-desc">Instant media extraction powered by high-performance API infrastructure. Your downloads start in seconds, not minutes.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon fi-2"><i class="fas fa-ban"></i></div>
+      <div class="feature-name">Zero Watermark</div>
+      <div class="feature-desc">Download TikTok videos completely clean — no TikTok logo, no overlays, no branding. Pure original content.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon fi-3"><i class="fas fa-music"></i></div>
+      <div class="feature-name">MP3 Extraction</div>
+      <div class="feature-desc">Extract the audio track from any TikTok video as a high-quality MP3 file. Perfect for saving music and sounds.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon fi-4"><i class="fas fa-mobile-alt"></i></div>
+      <div class="feature-name">Mobile Ready</div>
+      <div class="feature-desc">Fully optimized for every device — iPhone, Android, tablet, or desktop. Flawless experience everywhere.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon fi-5"><i class="fas fa-shield-alt"></i></div>
+      <div class="feature-name">Secure & Private</div>
+      <div class="feature-desc">No accounts, no tracking, no stored data. Your downloads are 100% private and your links are never logged.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon fi-6"><i class="fas fa-images"></i></div>
+      <div class="feature-name">Photo Slides</div>
+      <div class="feature-desc">Download TikTok carousel/slide posts with all images intact. Save individual photos or grab the entire collection.</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO USE -->
+<section id="how-to-use">
+  <div class="section-label reveal">
+    <div class="section-tag">Simple Process</div>
+    <h2 class="section-title">Download in <span>4 Easy Steps</span></h2>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card reveal">
+      <div class="step-num">01</div>
+      <div class="step-icon si-1"><i class="fab fa-tiktok"></i></div>
+      <div class="step-title">Copy TikTok Link</div>
+      <div class="step-desc">Open TikTok, find your video, tap Share → Copy Link to grab the URL.</div>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-num">02</div>
+      <div class="step-icon si-2"><i class="fas fa-paste"></i></div>
+      <div class="step-title">Paste the URL</div>
+      <div class="step-desc">The link auto-detects from your clipboard — or paste it manually into the input field above.</div>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-num">03</div>
+      <div class="step-icon si-3"><i class="fas fa-satellite-dish"></i></div>
+      <div class="step-title">Fetch Media</div>
+      <div class="step-desc">Click the FETCH button. Our system extracts all available media formats instantly.</div>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-num">04</div>
+      <div class="step-icon si-4"><i class="fas fa-download"></i></div>
+      <div class="step-title">Download Files</div>
+      <div class="step-desc">Choose your format — No Watermark, HD, MP3, or Photos — and download directly to your device.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT / SOCIAL SECTION -->
+<section id="contact">
+  <div class="section-label reveal">
+    <div class="section-tag">Connect With Me</div>
+    <h2 class="section-title">Follow <span>janmalik499</span></h2>
+  </div>
+  <p class="social-intro reveal">
+    Built by Umair Jan Malik — tech developer, AI enthusiast, and digital creator from Pakistan.
+    Find me across every platform.
+  </p>
+
+  <div class="social-grid reveal">
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/janmalik499" target="_blank" rel="noopener" class="social-card sc-facebook">
+      <div class="sc-icon"><i class="fab fa-facebook-f"></i></div>
+      <div class="sc-info"><div class="sc-name">Facebook</div><div class="sc-handle">@janmalik499</div></div>
+    </a>
+    <!-- X/Twitter -->
+    <a href="https://x.com/janmalik499" target="_blank" rel="noopener" class="social-card sc-x">
+      <div class="sc-icon"><i class="fab fa-x-twitter"></i></div>
+      <div class="sc-info"><div class="sc-name">X / Twitter</div><div class="sc-handle">@janmalik499</div></div>
+    </a>
+    <!-- YouTube -->
+    <a href="https://youtube.com/@janmalik499" target="_blank" rel="noopener" class="social-card sc-youtube">
+      <div class="sc-icon"><i class="fab fa-youtube"></i></div>
+      <div class="sc-info"><div class="sc-name">YouTube</div><div class="sc-handle">@janmalik499</div></div>
+    </a>
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/janmalik499" target="_blank" rel="noopener" class="social-card sc-instagram">
+      <div class="sc-icon"><i class="fab fa-instagram"></i></div>
+      <div class="sc-info"><div class="sc-name">Instagram</div><div class="sc-handle">@janmalik499</div></div>
+    </a>
+    <!-- GitHub -->
+    <a href="https://github.com/janmalik499" target="_blank" rel="noopener" class="social-card sc-github">
+      <div class="sc-icon"><i class="fab fa-github"></i></div>
+      <div class="sc-info"><div class="sc-name">GitHub</div><div class="sc-handle">janmalik499</div></div>
+    </a>
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/in/janmalik499" target="_blank" rel="noopener" class="social-card sc-linkedin">
+      <div class="sc-icon"><i class="fab fa-linkedin-in"></i></div>
+      <div class="sc-info"><div class="sc-name">LinkedIn</div><div class="sc-handle">janmalik499</div></div>
+    </a>
+    <!-- Telegram -->
+    <a href="https://t.me/janmalik499" target="_blank" rel="noopener" class="social-card sc-telegram">
+      <div class="sc-icon"><i class="fab fa-telegram-plane"></i></div>
+      <div class="sc-info"><div class="sc-name">Telegram</div><div class="sc-handle">@janmalik499</div></div>
+    </a>
+    <!-- Discord -->
+    <a href="https://discord.com/users/janmalik499" target="_blank" rel="noopener" class="social-card sc-discord">
+      <div class="sc-icon"><i class="fab fa-discord"></i></div>
+      <div class="sc-info"><div class="sc-name">Discord</div><div class="sc-handle">janmalik499</div></div>
+    </a>
+    <!-- Discord Server -->
+    <a href="https://discord.gg/BKdpFuaZwD" target="_blank" rel="noopener" class="social-card sc-discord">
+      <div class="sc-icon"><i class="fab fa-discord"></i></div>
+      <div class="sc-info"><div class="sc-name">Discord Server</div><div class="sc-handle">BKdpFuaZwD</div></div>
+    </a>
+    <!-- Twitch -->
+    <a href="https://www.twitch.tv/janmalik499" target="_blank" rel="noopener" class="social-card sc-twitch">
+      <div class="sc-icon"><i class="fab fa-twitch"></i></div>
+      <div class="sc-info"><div class="sc-name">Twitch</div><div class="sc-handle">janmalik499</div></div>
+    </a>
+    <!-- Reddit -->
+    <a href="https://www.reddit.com/user/Narrow_Remote2462/" target="_blank" rel="noopener" class="social-card sc-reddit">
+      <div class="sc-icon"><i class="fab fa-reddit-alien"></i></div>
+      <div class="sc-info"><div class="sc-name">Reddit</div><div class="sc-handle">Narrow_Remote2462</div></div>
+    </a>
+    <!-- Pinterest -->
+    <a href="https://www.pinterest.com/janmalik499" target="_blank" rel="noopener" class="social-card sc-pinterest">
+      <div class="sc-icon"><i class="fab fa-pinterest-p"></i></div>
+      <div class="sc-info"><div class="sc-name">Pinterest</div><div class="sc-handle">janmalik499</div></div>
+    </a>
+    <!-- Tumblr -->
+    <a href="https://www.tumblr.com/janmalik499" target="_blank" rel="noopener" class="social-card sc-tumblr">
+      <div class="sc-icon"><i class="fab fa-tumblr"></i></div>
+      <div class="sc-info"><div class="sc-name">Tumblr</div><div class="sc-handle">janmalik499</div></div>
+    </a>
+    <!-- Bluesky -->
+    <a href="https://bsky.app/profile/janmalik499.bsky.social" target="_blank" rel="noopener" class="social-card sc-bluesky">
+      <div class="sc-icon"><i class="fas fa-cloud"></i></div>
+      <div class="sc-info"><div class="sc-name">Bluesky</div><div class="sc-handle">janmalik499.bsky.social</div></div>
+    </a>
+    <!-- Mastodon -->
+    <a href="https://mastodon.social/@janmalik499" target="_blank" rel="noopener" class="social-card sc-mastodon">
+      <div class="sc-icon"><i class="fab fa-mastodon"></i></div>
+      <div class="sc-info"><div class="sc-name">Mastodon</div><div class="sc-handle">@janmalik499</div></div>
+    </a>
+    <!-- Parler -->
+    <a href="https://app.parler.com/janmalik499" target="_blank" rel="noopener" class="social-card sc-parler">
+      <div class="sc-icon"><i class="fas fa-comment-dots"></i></div>
+      <div class="sc-info"><div class="sc-name">Parler</div><div class="sc-handle">janmalik499</div></div>
+    </a>
+    <!-- WhatsApp -->
+    <a href="https://api.whatsapp.com/send/?phone=923269875407&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="social-card sc-whatsapp">
+      <div class="sc-icon"><i class="fab fa-whatsapp"></i></div>
+      <div class="sc-info"><div class="sc-name">WhatsApp</div><div class="sc-handle">+92 326 9875407</div></div>
+    </a>
+    <!-- WhatsApp Group -->
+    <a href="https://chat.whatsapp.com/IK1ERgxS9wMFDlIvTfsKwZ" target="_blank" rel="noopener" class="social-card sc-whatsapp">
+      <div class="sc-icon"><i class="fab fa-whatsapp"></i></div>
+      <div class="sc-info"><div class="sc-name">WA Group</div><div class="sc-handle">TikLix Community</div></div>
+    </a>
+    <!-- Patreon -->
+    <a href="https://www.patreon.com/c/janmalik499" target="_blank" rel="noopener" class="social-card sc-patreon">
+      <div class="sc-icon"><i class="fab fa-patreon"></i></div>
+      <div class="sc-info"><div class="sc-name">Patreon</div><div class="sc-handle">janmalik499</div></div>
+    </a>
+    <!-- Ko-fi -->
+    <a href="https://ko-fi.com/janmalik499" target="_blank" rel="noopener" class="social-card sc-ko-fi">
+      <div class="sc-icon"><i class="fas fa-coffee"></i></div>
+      <div class="sc-info"><div class="sc-name">Ko-fi</div><div class="sc-handle">janmalik499</div></div>
+    </a>
+    <!-- Binance -->
+    <a href="https://accounts.binance.com/register?ref=770094349" target="_blank" rel="noopener" class="social-card sc-binance">
+      <div class="sc-icon"><i class="fas fa-coins"></i></div>
+      <div class="sc-info"><div class="sc-name">Binance</div><div class="sc-handle">Ref: 770094349</div></div>
+    </a>
+    <!-- Ravelry -->
+    <a href="https://www.ravelry.com/people/janmalik499" target="_blank" rel="noopener" class="social-card sc-default">
+      <div class="sc-icon"><i class="fas fa-yarn"></i></div>
+      <div class="sc-info"><div class="sc-name">Ravelry</div><div class="sc-handle">janmalik499</div></div>
+    </a>
+    <!-- LiveJournal -->
+    <a href="https://janmalik499.livejournal.com/" target="_blank" rel="noopener" class="social-card sc-default">
+      <div class="sc-icon"><i class="fas fa-journal-whills"></i></div>
+      <div class="sc-info"><div class="sc-name">LiveJournal</div><div class="sc-handle">janmalik499</div></div>
+    </a>
+    <!-- Goodreads -->
+    <a href="https://www.goodreads.com/janmalik499" target="_blank" rel="noopener" class="social-card sc-default">
+      <div class="sc-icon"><i class="fas fa-book-open"></i></div>
+      <div class="sc-info"><div class="sc-name">Goodreads</div><div class="sc-handle">janmalik499</div></div>
+    </a>
+    <!-- LibraryThing -->
+    <a href="https://www.librarything.com/profile/janmalik499" target="_blank" rel="noopener" class="social-card sc-default">
+      <div class="sc-icon"><i class="fas fa-books"></i></div>
+      <div class="sc-info"><div class="sc-name">LibraryThing</div><div class="sc-handle">janmalik499</div></div>
+    </a>
+    <!-- BookCrossing -->
+    <a href="https://www.bookcrossing.com/mybookshelf/janmalik499/" target="_blank" rel="noopener" class="social-card sc-default">
+      <div class="sc-icon"><i class="fas fa-book"></i></div>
+      <div class="sc-info"><div class="sc-name">BookCrossing</div><div class="sc-handle">janmalik499</div></div>
+    </a>
+    <!-- Roblox -->
+    <a href="https://www.roblox.com/users/9469609022/profile" target="_blank" rel="noopener" class="social-card sc-default">
+      <div class="sc-icon"><i class="fas fa-gamepad"></i></div>
+      <div class="sc-info"><div class="sc-name">Roblox</div><div class="sc-handle">9469609022</div></div>
+    </a>
+    <!-- Epic Games -->
+    <a href="https://fortnitetracker.com/profile/all/UMAIR-JAN-MALIK" target="_blank" rel="noopener" class="social-card sc-default">
+      <div class="sc-icon"><i class="fas fa-crosshairs"></i></div>
+      <div class="sc-info"><div class="sc-name">Fortnite</div><div class="sc-handle">UMAIR-JAN-MALIK</div></div>
+    </a>
+    <!-- Microsoft Teams -->
+    <a href="https://teams.live.com/dl/launcher/launcher.html?url=%2F_%23%2Fl%2Fcommunity%2FFEADgPq_JqUt-rTxgI&type=community&deeplinkId=aa1b7fcd-cfb2-4ddb-8def-aaca25566108&directDl=true&msLaunch=true&enableMobilePage=true" target="_blank" rel="noopener" class="social-card sc-default">
+      <div class="sc-icon"><i class="fab fa-microsoft"></i></div>
+      <div class="sc-info"><div class="sc-name">MS Teams</div><div class="sc-handle">Community</div></div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">TikLix</div>
+  <div class="footer-copy">
+    Made with <span style="color:var(--neon-pink)">♥</span> by
+    <a href="https://github.com/janmalik499" target="_blank" rel="noopener">Umair Jan Malik</a>
+    · janmalik499 · Fateh Jang, Pakistan<br>
+    TikLix is not affiliated with TikTok or ByteDance Ltd. For personal use only.
+  </div>
+</footer>
+
+<!-- Dark/Light Toggle -->
+<button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <i class="fas fa-moon" id="theme-icon"></i>
+</button>
+
+<script>
+/* ===========================
+   GLOBAL STATE
+=========================== */
+const API_KEY   = 'e51e775334msh0d0faf94fa7ee4bp1d8a78jsn7dafd4721252';
+const API_HOST  = 'tiktok-downloader-download-tiktok-videos-without-watermark.p.rapidapi.com';
+const API_URL   = `https://${API_HOST}/index`;
+
+let mediaData   = null;
+let dlCount     = parseInt(localStorage.getItem('tiklix_dl_count') || '0');
+let isLoading   = false;
+let debounceTimer = null;
+
+/* ===========================
+   CUSTOM CURSOR
+=========================== */
+const cursor     = document.getElementById('cursor');
+const cursorAura = document.getElementById('cursor-aura');
+let mouseX=0,mouseY=0,auraX=0,auraY=0;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursor.style.left  = mouseX + 'px';
+  cursor.style.top   = mouseY + 'px';
+});
+function animAura() {
+  auraX += (mouseX - auraX) * 0.12;
+  auraY += (mouseY - auraY) * 0.12;
+  cursorAura.style.left = auraX + 'px';
+  cursorAura.style.top  = auraY + 'px';
+  requestAnimationFrame(animAura);
+}
+animAura();
+document.addEventListener('mouseleave', () => { cursor.style.opacity='0'; cursorAura.style.opacity='0'; });
+document.addEventListener('mouseenter', () => { cursor.style.opacity='1'; cursorAura.style.opacity='1'; });
+
+/* ===========================
+   PARTICLE CANVAS
+=========================== */
+(function initParticles() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  const COLORS = ['rgba(255,45,120,', 'rgba(0,245,255,', 'rgba(255,107,0,', 'rgba(191,95,255,'];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x  = Math.random() * W;
+      this.y  = Math.random() * H;
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.vy = (Math.random() - 0.5) * 0.4;
+      this.r  = Math.random() * 1.5 + 0.5;
+      this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      this.alpha = Math.random() * 0.6 + 0.1;
+      this.life  = 0;
+      this.maxLife = 200 + Math.random() * 300;
+    }
+    update() {
+      this.x += this.vx; this.y += this.vy; this.life++;
+      if (this.life > this.maxLife || this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+    }
+    draw() {
+      const t = this.life / this.maxLife;
+      const a = this.alpha * Math.sin(Math.PI * t);
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = this.color + a + ')';
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 120; i++) particles.push(new Particle());
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(); });
+    // Draw connections
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const d  = Math.sqrt(dx*dx + dy*dy);
+        if (d < 80) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(0,245,255,${(1-d/80)*0.06})`;
+          ctx.lineWidth   = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+/* ===========================
+   NAVBAR SCROLL
+=========================== */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ===========================
+   MOBILE MENU
+=========================== */
+document.getElementById('nav-toggle').addEventListener('click', () => document.getElementById('mobile-menu').classList.add('open'));
+document.getElementById('close-menu').addEventListener('click', closeMobileMenu);
+function closeMobileMenu() { document.getElementById('mobile-menu').classList.remove('open'); }
+
+/* ===========================
+   SCROLL REVEAL
+=========================== */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      ro.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+/* ===========================
+   THEME TOGGLE
+=========================== */
+function toggleTheme() {
+  const body = document.body;
+  const icon = document.getElementById('theme-icon');
+  body.classList.toggle('light-mode');
+  icon.className = body.classList.contains('light-mode') ? 'fas fa-sun' : 'fas fa-moon';
+}
+
+/* ===========================
+   TOAST SYSTEM
+=========================== */
+function showToast(msg, type = 'info') {
+  const icons  = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+  const tc     = document.getElementById('toast-container');
+  const toast  = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `
+    <i class="fas ${icons[type]} toast-icon"></i>
+    <span class="toast-msg">${msg}</span>
+    <button class="toast-close" onclick="this.parentElement.remove()" aria-label="Close notification">
+      <i class="fas fa-times"></i>
+    </button>`;
+  tc.appendChild(toast);
+  setTimeout(() => toast.style.animation = 'toastIn 0.4s reverse', 3700);
+  setTimeout(() => toast.remove(), 4100);
+}
+
+/* ===========================
+   CLIPBOARD AUTO-DETECTION
+=========================== */
+let lastClipboard = '';
+async function checkClipboard() {
+  try {
+    if (!navigator.clipboard || !navigator.clipboard.readText) return;
+    const text = await navigator.clipboard.readText();
+    if (text && text !== lastClipboard && isTikTokUrl(text)) {
+      lastClipboard = text;
+      const inp = document.getElementById('url-input');
+      inp.value = text;
+      toggleClearBtn(text);
+      showToast('TikTok link auto-detected! Fetching...', 'info');
+      resetResult();
+      setTimeout(() => fetchMedia(), 300);
+    }
+  } catch {}
+}
+// Auto-check clipboard when user returns to this tab (from TikTok app/browser)
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && !isLoading) {
+    checkClipboard();
+  }
+});
+
+async function pasteFromClipboard() {
+  lastClipboard = ''; // Reset so same URL can always be re-fetched
+  resetResult();      // Clear old result before new one
+  try {
+    const text = await navigator.clipboard.readText();
+    document.getElementById('url-input').value = text;
+    toggleClearBtn(text);
+    if (isTikTokUrl(text)) {
+      showToast('Pasted! Auto-fetching...', 'success');
+      setTimeout(() => fetchMedia(), 100);
+    } else {
+      showToast('Pasted from clipboard!', 'success');
+    }
+  } catch {
+    showToast('Allow clipboard access to paste automatically.', 'info');
+    document.getElementById('url-input').focus();
+  }
+}
+
+/* ===========================
+   URL VALIDATION
+=========================== */
+function isTikTokUrl(url) {
+  return /tiktok\.com\/(.*\/video\/\d+|@.+\/video\/\d+|t\/\w+)/i.test(url) ||
+         /tiktok\.com\/@.+\/photo\/\d+/i.test(url) ||
+         /tiktok\.com\/@.+\/slide\/\d+/i.test(url) ||
+         /tiktok\.com\/.*\/(photo|slide)\//i.test(url) ||
+         /vm\.tiktok\.com\/\w+/i.test(url) ||
+         /vt\.tiktok\.com\/\w+/i.test(url);
+}
+
+function cleanTikTokUrl(url) {
+  url = url.trim();
+  // Remove query params that may cause issues
+  try {
+    const u = new URL(url);
+    return u.origin + u.pathname;
+  } catch { return url; }
+}
+
+/* ===========================
+   FETCH MEDIA (MAIN)
+=========================== */
+async function fetchMedia() {
+  if (isLoading) return;
+  const raw = document.getElementById('url-input').value.trim();
+  if (!raw) { showToast('Please enter a TikTok URL first.', 'error'); return; }
+  if (!isTikTokUrl(raw)) { showToast('Invalid TikTok URL. Please check and try again.', 'error'); return; }
+
+  const url = cleanTikTokUrl(raw);
+  isLoading = true;
+  setLoaderState(true, 'FETCHING MEDIA...');
+  resetResult();
+
+  try {
+    const response = await fetch(`${API_URL}?url=${encodeURIComponent(url)}`, {
+      method: 'GET',
+      headers: {
+        'x-rapidapi-key':  API_KEY,
+        'x-rapidapi-host': API_HOST
+      }
+    });
+
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+
+    const json = await response.json();
+    processApiResponse(json, url);
+
+  } catch (err) {
+    setLoaderState(false);
+    showToast(`Error: ${err.message || 'Failed to fetch. Please try again.'}`, 'error');
+    console.error('TikLix API Error:', err);
+  } finally {
+    isLoading = false;
+  }
+}
+
+/* ===========================
+   PROCESS API RESPONSE
+=========================== */
+function processApiResponse(json, originalUrl) {
+  setLoaderState(false);
+
+  // Normalize multiple possible response formats
+  const data = json.data || json.result || json;
+
+  if (json.status === 'error' || data.error || (!data.video && !data.images && !data.play && !data.wmplay && !data.image_post_info && !data.photos && !data.slideshowImages)) {
+    showToast('Could not extract media. Make sure the TikTok is public.', 'error');
+    return;
+  }
+
+  mediaData = {
+    title:   data.title || data.desc || 'TikTok Video',
+    author:  data.author?.nickname || data.author?.name || data.author || '@user',
+    cover:   data.cover || data.origin_cover || data.thumbnail || '',
+    // video urls — handle both array and string formats
+    no_wm:   toArray(data.play || data.video),
+    hd:      toArray(data.hdplay || data.hd_video || data.video),
+    mp3:     toArray(data.music || data.music_info?.play || data.audio),
+    // images — handle photo/slideshow posts (multiple possible API formats)
+    images:  toArray(
+      data.images ||
+      data.image_post_info?.images?.map(i => i.display_image?.url_list?.[0]) ||
+      data.slideshowImages ||
+      data.slide_images ||
+      data.photos
+    )
+  };
+
+  // If images detected, auto-show gallery and mark as photo post
+  if (mediaData.images.length > 0) {
+    mediaData.no_wm = [];
+    mediaData.hd = [];
+  }
+
+  // Render result
+  renderResult();
+}
+
+function toArray(val) {
+  if (!val) return [];
+  if (Array.isArray(val)) return val.filter(Boolean);
+  if (typeof val === 'string' && val.startsWith('http')) return [val];
+  return [];
+}
+
+/* ===========================
+   RENDER RESULT
+=========================== */
+function renderResult() {
+  if (!mediaData) return;
+
+  document.getElementById('result-section').classList.add('active');
+  document.getElementById('result-section').style.display = 'block';
+
+  // Scroll to result
+  setTimeout(() => document.getElementById('result-section').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+
+  // Thumbnail
+  const thumb = document.getElementById('thumb-img');
+  thumb.src = mediaData.cover || '';
+  thumb.onerror = () => thumb.src = 'data:image/svg+xml,' + encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="140" height="100" viewBox="0 0 140 100">
+      <rect width="140" height="100" fill="#111122"/>
+      <path d="M55 35 L55 65 L85 50 Z" fill="#ff2d78"/>
+    </svg>`
+  );
+
+  // Meta
+  document.getElementById('video-title').textContent   = mediaData.title;
+  document.getElementById('video-author').textContent  = mediaData.author;
+
+  const isPhoto = mediaData.images.length > 0;
+  document.getElementById('tag-type').textContent = isPhoto ? 'PHOTOS' : 'VIDEO';
+
+  // Enable/disable buttons
+  const has_no_wm = mediaData.no_wm.length > 0;
+  const has_hd    = mediaData.hd.length > 0;
+  const has_mp3   = mediaData.mp3.length > 0;
+  const has_img   = mediaData.images.length > 0;
+
+  setBtn('btn-no-wm', has_no_wm);
+  setBtn('btn-hd',    has_hd);
+  setBtn('btn-mp3',   has_mp3);
+  setBtn('btn-photos', has_img);
+
+  // Gallery - auto-open for photo posts
+  if (has_img) {
+    renderGallery();
+    // Auto-show gallery since it's a photo post
+    document.getElementById('gallery-section').classList.add('active');
+  }
+
+  showToast('Media fetched successfully!', 'success');
+}
+
+function setBtn(id, enabled) {
+  const btn = document.getElementById(id);
+  btn.disabled = !enabled;
+  if (enabled) btn.style.opacity = '1';
+}
+
+/* ===========================
+   GALLERY
+=========================== */
+function renderGallery() {
+  const grid = document.getElementById('gallery-grid');
+  grid.innerHTML = '';
+  mediaData.images.forEach((img, i) => {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.innerHTML = `
+      <img src="${img}" alt="Slide ${i+1}" loading="lazy">
+      <div class="gallery-overlay">
+        <button class="gallery-dl-btn" onclick="downloadSingle('${img}', 'tiktok_slide_${i+1}.jpg')" aria-label="Download image ${i+1}">
+          <i class="fas fa-download"></i> Save
+        </button>
+      </div>`;
+    grid.appendChild(item);
+  });
+}
+
+function showGallery() {
+  const gs = document.getElementById('gallery-section');
+  gs.classList.toggle('active');
+  if (gs.classList.contains('active')) {
+    gs.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+async function downloadAllPhotos() {
+  if (!mediaData || !mediaData.images.length) return;
+  showToast(`Downloading ${mediaData.images.length} photos...`, 'info');
+  for (let i = 0; i < mediaData.images.length; i++) {
+    await delay(400);
+    downloadSingle(mediaData.images[i], `tiktok_slide_${i+1}.jpg`);
+  }
+  incrementCounter();
+}
+
+/* ===========================
+   DOWNLOAD FUNCTIONS
+=========================== */
+async function downloadFile(type) {
+  if (!mediaData) return;
+  let url, filename, progId;
+
+  switch (type) {
+    case 'no_wm':
+      url = mediaData.no_wm[0]; filename = 'tiktok_no_watermark.mp4'; progId = 'prog-no-wm'; break;
+    case 'hd':
+      url = mediaData.hd[0]; filename = 'tiktok_hd.mp4'; progId = 'prog-hd'; break;
+    case 'mp3':
+      url = mediaData.mp3[0]; filename = 'tiktok_audio.mp3'; progId = 'prog-mp3'; break;
+    default: return;
+  }
+
+  if (!url) { showToast('This format is not available for this video.', 'error'); return; }
+
+  const prog = document.getElementById(progId);
+  if (prog) { prog.style.width = '30%'; setTimeout(() => prog.style.width = '80%', 300); }
+
+  try {
+    showToast(`Downloading ${filename}...`, 'info');
+    if (prog) { prog.style.width = '30%'; setTimeout(() => prog.style.width = '80%', 300); }
+
+    fetch(url, { mode: 'cors' })
+      .then(res => {
+        if (!res.ok) throw new Error('fetch failed');
+        return res.blob();
+      })
+      .then(blob => {
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+        if (prog) { prog.style.width = '100%'; setTimeout(() => prog.style.width = '0%', 600); }
+        showToast(`${filename} saved!`, 'success');
+        incrementCounter();
+      })
+      .catch(() => {
+        // Fallback without new tab
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        if (prog) { prog.style.width = '100%'; setTimeout(() => prog.style.width = '0%', 600); }
+        showToast(`${filename} download started!`, 'success');
+        incrementCounter();
+      });
+  } catch (e) {
+    if (prog) prog.style.width = '0%';
+    showToast('Download failed. Try opening the link directly.', 'error');
+  }
+}
+
+function downloadSingle(url, filename) {
+  showToast('Preparing download...', 'info');
+  fetch(url, { mode: 'cors' })
+    .then(res => {
+      if (!res.ok) throw new Error('fetch failed');
+      return res.blob();
+    })
+    .then(blob => {
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+      showToast(filename + ' saved!', 'success');
+      incrementCounter();
+    })
+    .catch(() => {
+      // Fallback: direct link without new tab
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      incrementCounter();
+    });
+}
+
+/* ===========================
+   COUNTER
+=========================== */
+function incrementCounter() {
+  dlCount++;
+  localStorage.setItem('tiklix_dl_count', dlCount);
+  updateCounterDisplay();
+}
+
+function updateCounterDisplay() {
+  const el = document.getElementById('dl-count');
+  if (el) el.textContent = dlCount.toLocaleString();
+  const cd = document.getElementById('counter-display');
+  if (cd) animateCount(cd, parseInt(cd.textContent.replace(/,/g,'')), dlCount);
+}
+
+function animateCount(el, from, to) {
+  const dur = 600, start = performance.now();
+  function step(now) {
+    const p = Math.min((now - start) / dur, 1);
+    const v = Math.floor(from + (to - from) * easeOut(p));
+    el.textContent = v.toLocaleString();
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+function easeOut(t) { return 1 - Math.pow(1-t, 3); }
+
+/* ===========================
+   LOADER STATE
+=========================== */
+function setLoaderState(show, msg = '') {
+  const loader   = document.getElementById('loader');
+  const fetchBtn = document.getElementById('fetch-btn');
+  const loaderText = document.getElementById('loader-text');
+
+  if (show) {
+    loader.classList.add('active');
+    fetchBtn.disabled = true;
+    if (msg) loaderText.textContent = msg;
+    // Cycle loader messages
+    const msgs = ['FETCHING DATA...','EXTRACTING MEDIA...','PROCESSING...','ALMOST READY...'];
+    let i = 0;
+    loader._interval = setInterval(() => { loaderText.textContent = msgs[++i % msgs.length]; }, 1200);
+  } else {
+    loader.classList.remove('active');
+    fetchBtn.disabled = false;
+    clearInterval(loader._interval);
+  }
+}
+
+/* ===========================
+   CLEAR ALL (new download)
+=========================== */
+function clearAll() {
+  document.getElementById('url-input').value = '';
+  lastClipboard = ''; // Allow same URL to be re-fetched
+  toggleClearBtn('');
+  resetResult();
+  // Scroll back to top input
+  document.getElementById('home').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(() => document.getElementById('url-input').focus(), 600);
+}
+
+function toggleClearBtn(val) {
+  const btn = document.getElementById('clear-input-btn');
+  if (btn) btn.style.display = val ? 'flex' : 'none';
+}
+
+/* ===========================
+   RESET RESULT
+=========================== */
+function resetResult() {
+  mediaData = null;
+  document.getElementById('result-section').classList.remove('active');
+  document.getElementById('result-section').style.display = 'none';
+  document.getElementById('gallery-section').classList.remove('active');
+  ['btn-no-wm','btn-hd','btn-mp3','btn-photos'].forEach(id => {
+    const btn = document.getElementById(id);
+    btn.disabled = true;
+  });
+  ['prog-no-wm','prog-hd','prog-mp3'].forEach(id => {
+    const p = document.getElementById(id);
+    if (p) p.style.width = '0%';
+  });
+}
+
+/* ===========================
+   ENTER KEY SUPPORT
+=========================== */
+document.getElementById('url-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') fetchMedia();
+});
+
+/* ===========================
+   INPUT DEBOUNCE / VALIDATION
+=========================== */
+document.getElementById('url-input').addEventListener('input', () => {
+  clearTimeout(debounceTimer);
+  const val = document.getElementById('url-input').value.trim();
+  toggleClearBtn(val);
+  // Auto-clear old result when user starts editing for a new link
+  if (mediaData) { resetResult(); }
+  debounceTimer = setTimeout(() => {
+    const isValid = val && isTikTokUrl(val);
+    document.getElementById('fetch-btn').style.opacity = isValid || !val ? '1' : '0.7';
+  }, 300);
+});
+
+/* ===========================
+   HELPERS
+=========================== */
+function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+/* ===========================
+   INIT
+=========================== */
+(function init() {
+  updateCounterDisplay();
+  checkClipboard();
+})();
+</script>
+
+<!-- Social Bar Ad -->
+<script src="https://pl29504175.effectivecpmnetwork.com/8b/44/73/8b4473c260bd5d05bdc8b0062695a2cc.js"></script>
+
+</body>
+</html>
